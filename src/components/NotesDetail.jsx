@@ -7,11 +7,20 @@ function NotesDetail({ id, setIsNoteModalVisible }) {
 
     const [isEditable, setIsEditable] = useState(false);
     const [currentNote, setCurrentNote] = useState({ title: '', note: '' });
+    const [tempNote, setTempNote] = useState({ title: '', note: '' });
+
 
     useEffect(() => {
         const note = notes.find((note) => note.id === id);
         if (note) {
-            setCurrentNote({title:note.title,note:note.note});
+            setTempNote({ title: note.title, note: note.note });
+        }
+    }, [])
+
+    useEffect(() => {
+        const note = notes.find((note) => note.id === id);
+        if (note) {
+            setCurrentNote({ title: note.title, note: note.note });
         }
     }, [id, notes]);
 
@@ -77,7 +86,10 @@ function NotesDetail({ id, setIsNoteModalVisible }) {
                     <button
                         className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600"
                         onClick={() => {
-                            updateNote(id, currentNote.title, currentNote.note);
+                            if (tempNote.title != currentNote.title || tempNote.note != currentNote.note) {
+                                console.log("Update Called")
+                                updateNote(id, currentNote.title, currentNote.note);
+                            }
                             setIsEditable(false);
                             setIsNoteModalVisible(false);
                         }}

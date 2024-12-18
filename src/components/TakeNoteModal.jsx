@@ -22,7 +22,9 @@ function TakeNoteModal(props) {
 
             <button name="changeModal"
                 onClick={() => {
-                    createNote({title,note})
+                    if(title!='' && note!=''){
+                        createNote({title,note})
+                    }
                     setIsClicked(false)
                 }}
                 className='bg-white text-red-500  rounded-xl shadow-2xl  absolute top-1/3 right-1/4 mr-5'
